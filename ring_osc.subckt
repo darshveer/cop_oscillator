@@ -1,0 +1,37 @@
+* =====================================================
+* 7-Stage Multi-Tap Ring Oscillator Subcircuit (CMOS, 45nm PTM)
+* =====================================================
+
+.include "ptm_45nm_lp.l"
+.include "inv.subckt"
+.include "nand.subckt"
+
+* -----------------------------------------------------
+* Ports:
+*   N1_tap ... N7_tap : external taps for each node
+*   enable            : enable control for NAND gate
+*   vdd, gnd          : power and ground
+* -----------------------------------------------------
+
+.subckt RING_OSC N1 N2 N3 N4 N5 N6 N7 enable vdd gnd
+
+* === Internal ring connections ===
+XINV1 N1 N7 vdd gnd INV        ; stage 1
+XINV2 N2 N1 vdd gnd INV        ; stage 2
+XINV3 N3 N2 vdd gnd INV        ; stage 3
+XINV4 N4 N3 vdd gnd INV        ; stage 4
+XINV5 N5 N4 vdd gnd INV        ; stage 5
+XINV6 N6 N5 vdd gnd INV        ; stage 6
+XNAND7 N7 enable N6 vdd gnd NAND2  ; stage 7 (enable NAND)
+
+* === Output taps for external observation ===
+*E1 N1_tap 0 VOL='V(N1)'
+*E2 N2_tap 0 VOL='V(N2)'
+*E3 N3_tap 0 VOL='V(N3)'
+*E4 N4_tap 0 VOL='V(N4)'
+*E5 N5_tap 0 VOL='V(N5)'
+*E6 N6_tap 0 VOL='V(N6)'
+*E7 N7_tap 0 VOL='V(N7)'
+
+.ends RING_OSC
+

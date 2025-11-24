@@ -1,0 +1,18 @@
+
+* =====================================================
+* 2-Input CMOS NAND Gate Subcircuit (PTM 45nm)
+* =====================================================
+
+* Ports: a b out vdd gnd
+.subckt NAND2 a b out vdd gnd
+
+* --- Pull-up network (PMOS in parallel) ---
+Mp1 out a vdd vdd pmos L=600n W=360n
+Mp2 out b vdd vdd pmos L=600n W=360n
+
+* --- Pull-down network (NMOS in series) ---
+Mn1 out a nint gnd nmos L=600n W=360n
+Mn2 nint b gnd gnd nmos L=600n W=360n
+
+.ends NAND2
+ 
