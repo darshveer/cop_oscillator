@@ -1,0 +1,39 @@
+* =====================================================
+* coupling.subckt
+* Back-to-Back Inverter Coupling Stage
+* =====================================================
+
+.include "inv.subckt"
+
+.subckt COUPLING W_EN out_1 out_2 vdd gnd
+
+* --- Local enable inverter ---
+XINV W_EN W_EN_NOT vdd gnd INV
+
+* =====================================================
+* Forward path: out_1 -> out_2
+* =====================================================
+
+* PMOS network
+* drain source gate base vdd gnd 
+Mp0 mp_out_0 out_1 vdd vdd pmos L=1200n W=144n
+Mp1 out_2 W_EN_NOT mp_out_0 vdd pmos L=600n W=144n
+
+* NMOS network
+Mn0 out_2 W_EN mn_out_0 gnd nmos L=1200n W=72n
+Mn1 mn_out_0 out_1 gnd gnd nmos L=1200n W=72n
+
+* =====================================================
+* Reverse path: out_2 -> out_1
+* =====================================================
+
+* PMOS network
+Mp00 mp_out_00 out_2 vdd vdd pmos L=1200n W=144n
+Mp01 out_1 W_EN_NOT mp_out_00 vdd pmos L=600n W=144n
+
+* NMOS network
+Mn00 out_1 W_EN mn_out_00 gnd nmos L=1200n W=72n
+Mn01 mn_out_00 out_2 gnd gnd nmos L=600n W=72n
+
+.ends COUPLING
+

@@ -1,0 +1,27 @@
+* =====================================================
+* coupling_nand.subckt
+* Back-to-Back NAND Coupling Stage
+* =====================================================
+
+.include "nand_coupler"
+
+.subckt COUPLING_NAND W_EN out_1 out_2 vdd gnd
+
+* =====================================================
+* Local inverted enable (using NAND self-tie)
+* =====================================================
+
+
+* =====================================================
+* Forward path: out_1 → out_2
+* =====================================================
+* out_2 = NAND(out_1, W_EN_NOT)
+XNAND_FWD out_1 W_EN out_2 vdd gnd NAND2
+
+* =====================================================
+* Reverse path: out_2 → out_1
+* =====================================================
+* out_1 = NAND(out_2, W_EN_NOT)
+XNAND_REV out_2 W_EN out_1 vdd gnd NAND2
+
+.ends COUPLING_NAND

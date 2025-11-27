@@ -1,0 +1,9 @@
+* =====================================================
+* CMOS Inverter Subcircuit (PTM 45nm)
+* =====================================================
+
+.subckt INV in out vdd gnd
+Mp out in vdd vdd pmos L=600n W=360n
+Mn out in gnd gnd nmos L=600n W=180n
+.ends INV
+

@@ -1,0 +1,57 @@
+* =====================================================
+* coupled_ring_osc_test_simple.sp
+* Two 7-Stage Ring Oscillators coupled via a single inverter
+* =====================================================
+
+.include "ring_osc_7stage.subckt"
+.include "inv.subckt"       ; single inverter definition
+
+VDD vdd 0 1.1
+VEN enable 0 DC 1.1
+
+* === Instantiate Ring Oscillator 1 ===
+XROSC1 n1_1 n2_1 n3_1 n4_1 n5_1 n6_1 n7_1 enable vdd 0 RING_OSC
+
+* === Instantiate Ring Oscillator 2 ===
+XROSC2 n1_2 n2_2 n3_2 n4_2 n5_2 n6_2 n7_2 enable vdd 0 RING_OSC
+
+* =====================================================
+* --- Coupling through a single inverter ---
+* Connect midpoint of RO1 (n4_1) -> inverter -> midpoint of RO2 (n4_2)
+* =====================================================
+XCOUP_INV n4_1 n4_2 vdd 0 INV
+
+* --- Initial conditions to break symmetry ---
+.ic V(n4_1)=0.9
+
+* --- Transient simulation ---
+.tran 0.1n 10u uic
+
+* --- Measurement commands ---
+.measure tran TPERIOD1 TRIG v(n4_1) VAL=0.55 RISE=2 TARG v(n4_1) VAL=0.55 RISE=3
+.measure tran TPERIOD2 TRIG v(n4_2) VAL=0.55 RISE=2 TARG v(n4_2) VAL=0.55 RISE=3
+.measure tran FREQ1 PARAM='1/TPERIOD1'
+.measure tran FREQ2 PARAM='1/TPERIOD2'
+.measure tran PHASE_DELAY TRIG v(n4_1) VAL=0.55 RISE=2 TARG v(n4_2) VAL=0.55 RISE=2
+.measure tran PHASE_DIFF PARAM='360*PHASE_DELAY/TPERIOD1'
+
+* --- Voltage range checks ---
+.measure tran VOUT1_MAX MAX v(n4_1)
+.measure tran VOUT1_MIN MIN v(n4_1)
+.measure tran VOUT2_MAX MAX v(n4_2)
+.measure tran VOUT2_MIN MIN v(n4_2)
+
+.control
+run
+print TPERIOD1
+print TPERIOD2
+print FREQ1
+print FREQ2
+print PHASE_DIFF
+
+* --- Plot oscillator and coupling signals ---
+plot v(n4_1) v(n4_2)
+
+.endc
+.end
+
