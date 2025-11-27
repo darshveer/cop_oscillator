@@ -43,7 +43,7 @@ XCOUP2 w_en_2 n2_3 n2_1 vdd 0 COUPLING
 .ic V(n4_1)=0.9
 
 * --- Transient simulation ---
-.tran 1n 1000n uic 
+.tran 0.1n 1000n uic 
 
 * --- Measurement commands ---
 .measure tran TPERIOD1 TRIG v(n4_1) VAL=0.55 RISE=2 TARG v(n4_1) VAL=0.55 RISE=3
