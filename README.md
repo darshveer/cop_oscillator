@@ -15,7 +15,7 @@ The core innovation maps the **Ising Hamiltonian** to circuit dynamics:
 - Coupling between oscillators is implemented using back-to-back inverters (B2B inverters)
 - The system naturally evolves to minimize the Hamiltonian energy: **Hs = Σ Jij·si·sj**
 
-![Ising Model Mapping - Fully-connected graphs with spin representation](./Photos/Figure_1.png)
+
 
 ## 🏗️ Architecture
 
@@ -43,7 +43,7 @@ The core innovation maps the **Ising Hamiltonian** to circuit dynamics:
 - Selectable weight enables/disables coupling
 - All weights set to -1 (antiferromagnetic) for Max-Cut problems
 
-![Coupling between two ROSCs using B2B Inverters - Circuit implementation showing inverter chain](./Photos/Figure_12.png)
+
 
 ### Hexagonal Array Layout
 
@@ -92,7 +92,7 @@ signum_output.csv (binary spin states)
 Final Result Plot (colored node graph)
 ```
 
-![Horizontal workflow of the Ring Oscillator Ising Solver](./Photos/Figure_15.png)
+
 
 ### Step-by-Step Usage
 
