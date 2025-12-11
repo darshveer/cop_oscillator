@@ -49,7 +49,6 @@ The core innovation maps the **Ising Hamiltonian** to circuit dynamics:
 
 The proposed 28×20 hexagonal array design demonstrates the full-scale architecture:
 
-![Hexagonal coupled oscillator array topology](./Photos/Figure_14.png)
 
 ## 🛠️ Technology Stack
 
