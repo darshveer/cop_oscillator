@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/24103791/README.md)
+[README-updated.md](https://github.com/user-attachments/files/24103895/README-updated.md)
 # COP Oscillator: Ring Oscillator-Based Ising Solver
 
 A VLSI implementation of a probabilistic compute fabric using coupled ring oscillators to solve combinatorial optimization problems (COPs) such as the Max-Cut problem.
@@ -14,6 +14,8 @@ The core innovation maps the **Ising Hamiltonian** to circuit dynamics:
 - Oscillator phase represents spin state (in-phase → same state, 180° out-of-phase → opposite state)
 - Coupling between oscillators is implemented using back-to-back inverters (B2B inverters)
 - The system naturally evolves to minimize the Hamiltonian energy: **Hs = Σ Jij·si·sj**
+
+![Ising Model Mapping - Fully-connected graphs with spin representation](./Photos/Figure_1.png)
 
 ## 🏗️ Architecture
 
@@ -41,6 +43,14 @@ The core innovation maps the **Ising Hamiltonian** to circuit dynamics:
 - Selectable weight enables/disables coupling
 - All weights set to -1 (antiferromagnetic) for Max-Cut problems
 
+![Coupling between two ROSCs using B2B Inverters - Circuit implementation showing inverter chain](./Photos/Figure_12.png)
+
+### Hexagonal Array Layout
+
+The proposed 28×20 hexagonal array design demonstrates the full-scale architecture:
+
+![Hexagonal coupled oscillator array topology](./Photos/Figure_14.png)
+
 ## 🛠️ Technology Stack
 
 | Component | Tool/Library |
@@ -63,6 +73,7 @@ cop_oscillator/
 ├── run_sim.sh             # Complete workflow orchestration
 ├── nodes.csv              # Raw simulation output
 ├── signum_output.csv      # Discretized phase states
+├── Photos/                # Circuit diagrams and result plots
 └── README.md              # This file
 ```
 
@@ -81,6 +92,8 @@ signum_output.csv (binary spin states)
    ↓ (visualize_edges.py)
 Final Result Plot (colored node graph)
 ```
+
+![Horizontal workflow of the Ring Oscillator Ising Solver](./Photos/Figure_15.png)
 
 ### Step-by-Step Usage
 
@@ -131,10 +144,18 @@ Final Result Plot (colored node graph)
 - **Test Cases:** 20 independent runs
 - **Success Rate:** Highly variable due to lack of thermal noise
 
-**Example Result:**
-- Max-Cut Problem: 11 edges
-- Solution Accuracy: 100%
-- Configuration: Bipartite graph partition (Red/Blue nodes)
+![Histogram of Accuracy for 4×4 array across 20 test cases](./Photos/Figure_17.png)
+
+### Example Result - Max-Cut Solution
+
+The following example demonstrates a successful solution with 100% accuracy on a graph with Max-Cut value of 11:
+
+![Example Max-Cut problem graph with solution partition](./Photos/Figure_19.png)
+
+The graph is partitioned into two sets:
+- **Red nodes** represent spin state -1
+- **Blue nodes** represent spin state +1
+- **Edges between partitions** contribute to Max-Cut value (11 in this case)
 
 ### Probabilistic Behavior
 
@@ -282,6 +303,7 @@ For questions or issues:
 
 - **Paper:** [IEEE JSSC 2021](https://doi.org/10.1109/JSSC.2021.3062821)
 - **GitHub:** [darshveer/cop_oscillator](https://github.com/darshveer/cop_oscillator)
+- **Photos:** [All Circuit Diagrams and Results](./Photos/)
 - **Institution:** [IIIT Bangalore](https://www.iiitb.ac.in/)
 
 ---
